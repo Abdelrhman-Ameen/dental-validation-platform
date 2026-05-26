@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Clock, Eye, Loader2, Send, TimerReset } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Clock, Eye, Loader2, Play, Send, TimerReset } from "lucide-react";
 import { AppShell } from "@/components/common/app-shell";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import { ImageViewer } from "@/components/quiz/image-viewer";
@@ -106,7 +106,8 @@ function QuizWorkspace() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(QUESTION_TIMER_SECONDS);
   const [totalLeft, setTotalLeft] = useState(() => totalTimerFor(20)); // Will be updated once questions load
-  const [startedAt] = useState(() => new Date().toISOString());
+  const [startedAt, setStartedAt] = useState("");
+  const [quizStarted, setQuizStarted] = useState(false);
   const [answers, setAnswers] = useState<Record<string, QuizAnswerInput>>({});
   const [feedback, setFeedback] = useState<Record<string, Feedback>>({});
   const [feedbackLoading, setFeedbackLoading] = useState(false);
@@ -129,16 +130,16 @@ function QuizWorkspace() {
   }, [questions.length]);
 
   useEffect(() => {
-    if (!currentQuestion) {
+    if (!quizStarted || !currentQuestion) {
       return;
     }
     const existing = answers[currentQuestion.id]?.timeSpent || 0;
     setSecondsLeft(Math.max(0, QUESTION_TIMER_SECONDS - existing));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex, currentQuestion?.id]);
+  }, [quizStarted, currentIndex, currentQuestion?.id]);
 
   useEffect(() => {
-    if (!currentQuestion || submitting || currentFeedback) {
+    if (!quizStarted || !currentQuestion || submitting || currentFeedback) {
       return;
     }
     const interval = window.setInterval(() => {
@@ -146,24 +147,27 @@ function QuizWorkspace() {
       setTotalLeft((value) => Math.max(0, value - 1));
     }, 1000);
     return () => window.clearInterval(interval);
-  }, [currentQuestion, currentFeedback, submitting]);
+  }, [quizStarted, currentQuestion, currentFeedback, submitting]);
 
   useEffect(() => {
-    if (!currentQuestion || submitting || currentFeedback) {
+    if (!quizStarted || !currentQuestion || submitting || currentFeedback) {
       return;
     }
     if (secondsLeft === 0) {
       void revealAnswer();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [secondsLeft]);
+  }, [quizStarted, secondsLeft]);
 
   useEffect(() => {
+    if (!quizStarted) {
+      return;
+    }
     if (totalLeft === 0 && questions.length && !submitting) {
       void handleSubmit(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalLeft]);
+  }, [quizStarted, totalLeft]);
 
   function persistCurrentTime() {
     if (!currentQuestion) {
@@ -333,6 +337,55 @@ function QuizWorkspace() {
           Ask an admin to set questions to Live status for the current dataset version.
         </CardContent>
       </Card>
+    );
+  }
+
+  if (!quizStarted) {
+    return (
+      <div className="mx-auto max-w-2xl">
+        <Card className="border-white/10 bg-card/90 shadow-2xl">
+          <CardHeader className="text-center space-y-2">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <Play className="h-7 w-7 fill-current" />
+            </div>
+            <CardTitle className="text-3xl font-semibold tracking-normal">Are you ready?</CardTitle>
+            <p className="text-muted-foreground">
+              You are about to start the dental validation benchmark.
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="rounded-lg bg-muted/40 p-5 border space-y-4">
+              <h3 className="font-semibold text-sm text-foreground">Study Rules & Guidelines:</h3>
+              <ul className="text-sm space-y-3 text-muted-foreground">
+                <li className="flex items-start gap-2.5">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary text-xs font-bold mt-0.5">1</span>
+                  <span>You will evaluate a total of <strong>{questions.length} cases</strong>.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary text-xs font-bold mt-0.5">2</span>
+                  <span>Each question has a limit of <strong>{formatSeconds(QUESTION_TIMER_SECONDS)}</strong>, with a total quiz limit of <strong>{formatSeconds(totalTimerFor(questions.length))}</strong>.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary text-xs font-bold mt-0.5">3</span>
+                  <span>Identify all visible conditions and select the involved tooth numbers using the FDI system.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary text-xs font-bold mt-0.5">4</span>
+                  <span>Check your answers to receive instant diagnostic feedback and compare with AI standard.</span>
+                </li>
+              </ul>
+            </div>
+
+            <Button size="lg" className="w-full text-base font-semibold py-6" onClick={() => {
+              setStartedAt(new Date().toISOString());
+              setQuizStarted(true);
+            }}>
+              <Play className="mr-2 h-5 w-5 fill-current" />
+              Start Now
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
