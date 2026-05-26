@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Management - Diagnostic Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Geist:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#111c2d",
+                        "primary-container": "#06b6d4",
+                        "primary-fixed": "#acedff",
+                        "outline-variant": "#3d494c",
+                        "on-primary-container": "#00424f",
+                        "tertiary": "#bec6e0",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "surface-container-lowest": "#0b0f10",
+                        "surface-bright": "#363a3b",
+                        "primary": "#4cd7f6",
+                        "surface-variant": "#323537",
+                        "surface-dim": "#101415",
+                        "outline": "#869397",
+                        "on-tertiary-container": "#343c50",
+                        "on-error-container": "#ffdad6",
+                        "on-error": "#690005",
+                        "surface-container": "#1d2022",
+                        "on-primary-fixed": "#001f26",
+                        "inverse-on-surface": "#2d3133",
+                        "surface-tint": "#4cd7f6",
+                        "on-tertiary": "#283044",
+                        "error": "#ffb4ab",
+                        "inverse-primary": "#00687a",
+                        "on-secondary-container": "#aeb9d0",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "surface-container-highest": "#323537",
+                        "on-tertiary-fixed": "#131b2e",
+                        "on-primary": "#003640",
+                        "on-background": "#e0e3e5",
+                        "background": "#101415",
+                        "primary-fixed-dim": "#4cd7f6",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#272a2c",
+                        "secondary": "#bcc7de",
+                        "on-surface-variant": "#bcc9cd",
+                        "on-primary-fixed-variant": "#004e5c",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "on-secondary": "#263143",
+                        "secondary-fixed": "#d8e3fb",
+                        "inverse-surface": "#e0e3e5",
+                        "tertiary-fixed": "#dae2fd",
+                        "tertiary-container": "#9ea6bf",
+                        "on-surface": "#e0e3e5",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "surface": "#101415",
+                        "secondary-container": "#3e495d",
+                        "surface-container-low": "#191c1e"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "gutter": "16px",
+                        "element-gap": "12px",
+                        "section-gap": "40px",
+                        "container-padding": "24px",
+                        "base": "4px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Geist"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Geist"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            /* Subtle blueprint grid overlay */
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        
+        .glass-panel {
+            background-color: theme('colors.surface-container/70');
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ai-glow {
+            box-shadow: 0 0 12px rgba(76, 215, 246, 0.3);
+        }
+
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface-variant');
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col md:flex-row">
+<!-- Mobile Top App Bar (Hidden on Desktop) -->
+<header class="md:hidden fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 backdrop-blur-md bg-surface-dim/70 border-b border-white/10 flat no shadows text-primary dark:text-primary">
+<div class="flex items-center gap-2 text-primary hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined text-primary font-bold">clinical_notes</span>
+<span class="text-headline-md font-headline-md font-bold tracking-tighter text-primary dark:text-primary opacity-80 scale-95 transition-all">DIAGNOSTIC INTELLIGENCE</span>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/10">
+<img alt="Doctor Avatar" class="w-full h-full object-cover" data-alt="A close up, high resolution portrait of a professional medical doctor. The doctor is wearing a clean white clinical coat with a subtle modern blue accent. The lighting is soft and even, highlighting a serious yet compassionate expression, set against a dark, minimalist laboratory background with faint glowing technical UI elements in the deep background. Corporate modernism style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUcytEg7F3hReBeJNH_43GpJ1OJojtHmv16qLLsiFSP0LoT6lbd-LRBNl7hjOokM3qSws7tXCyENDSaSU3Xj_HK1vFYmOw8gMPWIb28kFhRf3j2tAi2AnzCJ9jDvt-s8C7fUnhHqGVZcuziD0c2IrDQmI35mETL3f2s3pd9gsXlaEIyZP8hBjj3aPa5yA0wIgmq3hZVr1Hx10Dq-2pDRwdwFuFfjnjYQ2Aau3iUnXDfROhpIBP7KtUwF7wMtRHkQdl8_DlZ4tWCsg"/>
+</div>
+</header>
+<!-- Desktop Sidebar Navigation -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full z-40 flex-col pt-20 bg-surface-container-high dark:bg-surface-container-high text-primary dark:text-primary bg-surface-container-high border-r border-white/10 shadow-xl docked left h-full w-80">
+<!-- Profile Header -->
+<div class="px-6 pb-6 border-b border-white/10 mb-6 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/30">
+<img alt="Medical Practitioner Profile" class="w-full h-full object-cover" data-alt="A close up, high resolution portrait of a professional medical doctor. The doctor is wearing a clean white clinical coat with a subtle modern blue accent. The lighting is soft and even, highlighting a serious yet compassionate expression, set against a dark, minimalist laboratory background with faint glowing technical UI elements in the deep background. Corporate modernism style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASc2i81_fgZPk2oqKd7jHEDS8Z92CLXiCyaHdslgjaljyVcbUfIhtaR_jg0t6oQpHmxyxtD1A8_DQCVXDSZRq2Ei91m3t5Tf3KqPKcQGQKAfgWWU-R0FMQfsHi7VqlwFkDAcqHvmc-UwcsVdcDcOvKXC5-GHEIwy5QtU1f6iGk_6CxuYmVdLvxj9HrCopbESUCYa4DjGpOHe43gKEhBpWauH_OEzNxNQDvfTsvSySPViEp4nc1NpWoyRaTZc_hKboxXuU6k4gySFs"/>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm text-on-surface">Dr. Julian Vane</span>
+<span class="text-label-md font-label-md text-on-surface-variant">Lead Radiologist</span>
+<span class="text-[10px] text-primary/70 uppercase tracking-wider mt-1">Admin Access</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:bg-surface-variant/30 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+                Patient Records
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:bg-surface-variant/30 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+                AI Calibration
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:bg-surface-variant/30 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+                Study Protocols
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:bg-surface-variant/30 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">public</span>
+                Research Portal
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-label-md font-label-md bg-secondary-container text-on-secondary-container translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-80 pt-20 md:pt-8 pb-24 md:pb-8 px-4 md:px-8 max-w-7xl mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10">
+<div>
+<h1 class="text-display-lg font-display-lg text-on-surface mb-2">User Management</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant">System access control and diagnostic performance tracking.</p>
+</div>
+<div class="flex gap-4 w-full md:w-auto">
+<div class="relative flex-1 md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-high border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-on-surface-variant/50" placeholder="Search ID or Name..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-label-md font-label-md hover:opacity-90 transition-opacity flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                    Invite User
+                </button>
+</div>
+</div>
+<!-- Data Table Card (Glassmorphism) -->
+<div class="glass-panel rounded-xl overflow-hidden shadow-2xl">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-white/10 bg-surface/50">
+<th class="px-6 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">User</th>
+<th class="px-6 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Role / Entity</th>
+<th class="px-6 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Diagnostic Quiz</th>
+<th class="px-6 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<!-- Row 1 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary border border-white/10">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<div class="text-body-md font-body-md text-on-surface font-semibold">Dr. Sarah Jenkins</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">sarah.j@clinic.edu</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-primary/10 text-primary border border-primary/20 w-fit">Doctor</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Stanford Med</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 bg-surface-container-highest rounded-full overflow-hidden w-24">
+<div class="h-full bg-primary ai-glow" style="width: 92%"></div>
+</div>
+<span class="text-label-md font-label-md text-on-surface">92%</span>
+<span class="material-symbols-outlined text-[16px] text-primary" title="Completed">check_circle</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="View Attempt">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Edit Role">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors" title="Deactivate">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary border border-white/10">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+</div>
+<div>
+<div class="text-body-md font-body-md text-on-surface font-semibold">Dr. Michael Chen</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">m.chen@hospital.org</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-tertiary/10 text-tertiary border border-tertiary/20 w-fit">Admin</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">General Hospital</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="text-label-md font-label-md text-on-surface-variant italic">N/A - Admin</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Edit Role">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary border border-white/10">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<div class="text-body-md font-body-md text-on-surface font-semibold">Elena Rostova</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">e.rostova@med.edu</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-primary/10 text-primary border border-primary/20 w-fit">Doctor</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">NYU Dentistry</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 bg-surface-container-highest rounded-full overflow-hidden w-24">
+<div class="h-full bg-secondary-fixed-dim" style="width: 45%"></div>
+</div>
+<span class="text-label-md font-label-md text-on-surface-variant">Pending</span>
+<span class="material-symbols-outlined text-[16px] text-outline" title="In Progress">pending</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="View Attempt">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Edit Role">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors" title="Deactivate">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="border-t border-white/10 p-4 flex items-center justify-between bg-surface/30">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Showing 1 to 3 of 45 entries</span>
+<div class="flex gap-1">
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-variant/50 transition-colors disabled:opacity-50"><span class="material-symbols-outlined text-[20px]">chevron_left</span></button>
+<button class="w-8 h-8 rounded bg-primary/10 text-primary border border-primary/30 text-label-sm font-label-sm flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded hover:bg-surface-variant/50 text-on-surface-variant text-label-sm font-label-sm flex items-center justify-center transition-colors">2</button>
+<button class="w-8 h-8 rounded hover:bg-surface-variant/50 text-on-surface-variant text-label-sm font-label-sm flex items-center justify-center transition-colors">3</button>
+<span class="w-8 h-8 flex items-center justify-center text-on-surface-variant">...</span>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-variant/50 transition-colors"><span class="material-symbols-outlined text-[20px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation (Hidden on Desktop) -->
+<!-- Suppressed: Settings is a task-focused sub-page, but per instruction, if it's a top-level, we evaluate. However, "Settings" is in the Drawer. The instruction says: "You MUST ONLY render the Navigation Drawer or BottomNavBar if..." 
+         Wait, BottomNavBar is for Dashboard, Diagnostics, Leaderboard, Analytics. User Management is essentially Settings/Admin.
+         I will render the BottomNavBar but hide it for this specific context? The instruction says:
+         "Suppress the FAB on Settings, Profile... You are only permitted to render BottomNavBar or SideNav if current screen represents a top level destination".
+         User Management might not be in the Bottom Nav. I'll omit BottomNavBar and just rely on the Desktop Drawer, or include it but make nothing active.
+         Actually, I'll include BottomNavBar to satisfy component execution but none are active. -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface-container/80 backdrop-blur-xl dark:bg-surface-container/80 border-t border-white/10 shadow-2xl text-primary dark:text-primary">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-sm font-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">radiology</span>
+<span class="text-label-sm font-label-sm mt-1">Diagnostics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="text-label-sm font-label-sm mt-1">Leaderboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-label-sm font-label-sm mt-1">Analytics</span>
+</a>
+</nav>
+</body></html>

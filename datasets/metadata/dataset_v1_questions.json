@@ -1,0 +1,148 @@
+{
+  "datasetVersion": "dataset_v1",
+  "source": "WebSite/DataSet/test/_annotations.csv",
+  "questionText": "Identify the dominant radiographic finding in this dental image.",
+  "choices": ["Cavity", "Fillings", "Implant", "Impacted Tooth"],
+  "questions": [
+    {
+      "id": "q1",
+      "filename": "0136_jpg.rf.03e2aec8ec77594665dd1abc68d47bd3.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings", "Implant"],
+      "annotationCount": 13
+    },
+    {
+      "id": "q2",
+      "filename": "0507_jpg.rf.07ca548c6eb4f61c76f1629e7bc26fa4.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings", "Implant"],
+      "annotationCount": 11
+    },
+    {
+      "id": "q3",
+      "filename": "0485_jpg.rf.09576812fc790cab5da2f6a5ceafe25f.jpg",
+      "correctAnswer": "Cavity",
+      "labelsPresent": ["Cavity"],
+      "annotationCount": 2
+    },
+    {
+      "id": "q4",
+      "filename": "0053_jpg.rf.0a39e4969cb730a0e08d415d819e14d9.jpg",
+      "correctAnswer": "Implant",
+      "labelsPresent": ["Cavity", "Implant"],
+      "annotationCount": 5
+    },
+    {
+      "id": "q5",
+      "filename": "0554_jpg.rf.1269175f2171b29dd820f6bc9648f31e.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings"],
+      "annotationCount": 8
+    },
+    {
+      "id": "q6",
+      "filename": "0688_jpg.rf.152fb99de9e0af07c5546e20e966b140.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Cavity", "Fillings", "Implant"],
+      "annotationCount": 12
+    },
+    {
+      "id": "q7",
+      "filename": "0700_jpg.rf.1cf7f2dd7c9cd0a65b6213009e8cc43d.jpg",
+      "correctAnswer": "Impacted Tooth",
+      "labelsPresent": ["Cavity", "Impacted Tooth"],
+      "annotationCount": 4
+    },
+    {
+      "id": "q8",
+      "filename": "0239_jpg.rf.1e1cbd283aab8fb5c4b9822c5970d3ed.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings", "Impacted Tooth", "Implant"],
+      "annotationCount": 9
+    },
+    {
+      "id": "q9",
+      "filename": "0846_jpg.rf.21922087f9d9ce3b24ba1f2f3557ce5e.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings", "Impacted Tooth"],
+      "annotationCount": 10
+    },
+    {
+      "id": "q10",
+      "filename": "0323_jpg.rf.2bd124050fdcb8c212a28a98519b6f5c.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings", "Implant"],
+      "annotationCount": 12
+    },
+    {
+      "id": "q11",
+      "filename": "0623_jpg.rf.2dd72a2fd2469a4ce080214c3d30f318.jpg",
+      "correctAnswer": "Implant",
+      "labelsPresent": ["Fillings", "Implant"],
+      "annotationCount": 13
+    },
+    {
+      "id": "q12",
+      "filename": "0428_jpg.rf.314f2ee0551f5c46c3b5fbb7b3b4026e.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings", "Implant"],
+      "annotationCount": 11
+    },
+    {
+      "id": "q13",
+      "filename": "0480_jpg.rf.2c77b1e834ef71e71673f1ff1dcc0c2d.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings"],
+      "annotationCount": 2
+    },
+    {
+      "id": "q14",
+      "filename": "0305_jpg.rf.36d82670c3421c0004a468fe4047f470.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings"],
+      "annotationCount": 8
+    },
+    {
+      "id": "q15",
+      "filename": "0007_jpg.rf.3699155bba57d7aecb1aa801a698ba20.jpg",
+      "correctAnswer": "Implant",
+      "labelsPresent": ["Implant"],
+      "annotationCount": 1
+    },
+    {
+      "id": "q16",
+      "filename": "0538_jpg.rf.3aa73262a625104b61fa05c176d468fc.jpg",
+      "correctAnswer": "Impacted Tooth",
+      "labelsPresent": ["Impacted Tooth"],
+      "annotationCount": 3
+    },
+    {
+      "id": "q17",
+      "filename": "0151_jpg.rf.5b81ded715693313866503d5a4da1639.jpg",
+      "correctAnswer": "Cavity",
+      "labelsPresent": ["Cavity"],
+      "annotationCount": 2
+    },
+    {
+      "id": "q18",
+      "filename": "0061_jpg.rf.3188dc5179f4b6d600459b1aeba93e87.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings"],
+      "annotationCount": 6
+    },
+    {
+      "id": "q19",
+      "filename": "0370_jpg.rf.32e17da21801c80dd1f2a517e4e8c0e1.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings", "Implant"],
+      "annotationCount": 2
+    },
+    {
+      "id": "q20",
+      "filename": "0277_jpg.rf.5ce1f22a0e596c40a1e0f0d901a42f73.jpg",
+      "correctAnswer": "Fillings",
+      "labelsPresent": ["Fillings", "Implant"],
+      "annotationCount": 14
+    }
+  ]
+}

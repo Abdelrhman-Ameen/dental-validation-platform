@@ -1,0 +1,121 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+
+    function onboardingKeys() {
+      return [
+        "uid",
+        "name",
+        "email",
+        "role",
+        "university",
+        "country",
+        "governorate",
+        "specialty",
+        "yearsExperience",
+        "academicStage",
+        "createdAt",
+        "updatedAt",
+        "hasCompletedQuiz"
+      ];
+    }
+
+    function attemptKeys() {
+      return [
+        "attemptId",
+        "userId",
+        "userName",
+        "university",
+        "datasetVersion",
+        "startedAt",
+        "finishedAt",
+        "totalScore",
+        "totalQuestions",
+        "accuracy",
+        "timeTaken",
+        "browser",
+        "device",
+        "userAgent",
+        "answers",
+        "createdAt"
+      ];
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId)
+        && request.resource.data.uid == userId
+        && request.resource.data.role == "doctor"
+        && request.resource.data.keys().hasOnly(onboardingKeys());
+      allow update: if isOwner(userId)
+        && resource.data.role == request.resource.data.role
+        && request.resource.data.role != "admin"
+        && request.resource.data.diff(resource.data).changedKeys().hasOnly([
+          "name",
+          "university",
+          "country",
+          "governorate",
+          "specialty",
+          "yearsExperience",
+          "academicStage",
+          "updatedAt",
+          "hasCompletedQuiz"
+        ]);
+      allow write: if isAdmin();
+    }
+
+    match /questions/{questionId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /quiz_attempts/{attemptId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    match /leaderboard/{entryId} {
+      allow read: if true;
+      allow create, update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /ai_models/{modelId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /dataset_images/{imageId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /analytics/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /audit_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    match /settings/{settingId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

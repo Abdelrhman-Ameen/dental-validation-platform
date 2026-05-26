@@ -1,0 +1,27 @@
+{
+  "name": "dental-validation-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI dental diagnosis external validation platform for dentist-vs-model benchmarking.",
+  "workspaces": [
+    "frontend",
+    "backend/functions"
+  ],
+  "scripts": {
+    "dev": "npm --workspace frontend run dev",
+    "build": "npm --workspace frontend run build",
+    "lint": "npm --workspace frontend run lint",
+    "typecheck": "npm --workspace frontend run typecheck",
+    "functions:build": "npm --workspace backend/functions run build",
+    "functions:serve": "npm --workspace backend/functions run serve",
+    "seed": "npm --workspace backend/functions run seed",
+    "seed:local": "node scripts/generate-local-simulation.mjs",
+    "admin:create": "node scripts/create-admin.mjs",
+    "firebase:login": "npx firebase-tools login",
+    "firebase:setup": "node scripts/setup-firebase.mjs",
+    "firebase:deploy": "npx firebase-tools deploy --only firestore:rules,functions"
+  },
+  "engines": {
+    "node": ">=20.18.0"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "users": {
+    "doctor_uid": {
+      "uid": "doctor_uid",
+      "name": "Dr. Sarah Jenkins",
+      "email": "sarah.jenkins@example.edu",
+      "role": "doctor",
+      "university": "Stanford Medicine",
+      "country": "United States",
+      "governorate": "California",
+      "specialty": "Oral radiology",
+      "yearsExperience": 8,
+      "academicStage": "Graduate",
+      "createdAt": "serverTimestamp",
+      "hasCompletedQuiz": false
+    }
+  },
+  "questions": {
+    "q1": {
+      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/project/o/datasets%2Fdataset_v1%2Fq1.jpg?alt=media",
+      "questionText": "Identify the dominant radiographic finding in this dental image.",
+      "choices": ["Cavity", "Fillings", "Implant", "Impacted Tooth"],
+      "correctAnswer": "Fillings",
+      "aiPrediction": "Fillings",
+      "aiConfidence": 0.96,
+      "difficulty": "moderate",
+      "active": true,
+      "datasetVersion": "dataset_v1"
+    }
+  },
+  "quiz_attempts": {
+    "doctor_uid_dataset_v1": {
+      "attemptId": "doctor_uid_dataset_v1",
+      "userId": "doctor_uid",
+      "startedAt": "serverTimestamp",
+      "finishedAt": "serverTimestamp",
+      "totalScore": 18,
+      "totalQuestions": 20,
+      "timeTaken": 1374,
+      "answers": [
+        {
+          "questionId": "q1",
+          "selectedAnswer": "Fillings",
+          "correct": true,
+          "timeSpent": 46,
+          "confidence": 82
+        }
+      ]
+    }
+  },
+  "ai_models": {
+    "deit-coatnet-cross-attention": {
+      "modelName": "DeiT+CoAtNet Cross-Attention",
+      "precision": 0.965,
+      "recall": 0.961,
+      "f1": 0.9641,
+      "score": 19,
+      "datasetVersion": "dataset_v1"
+    }
+  }
+}
